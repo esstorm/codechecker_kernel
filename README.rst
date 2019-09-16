@@ -13,7 +13,7 @@ To install ``codechecker_kernel``::
     pip install .
     python -m codechecker_kernel.install
 
-Using the Echo kernel
+Using the CodeChecker kernel
 ---------------------
 **Notebook**: The *New* menu in the notebook should show an option for a CodeChecker notebook.
 
