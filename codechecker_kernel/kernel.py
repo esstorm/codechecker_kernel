@@ -1,7 +1,8 @@
 from ipykernel.kernelbase import Kernel
 from subprocess import Popen, PIPE, call, CalledProcessError
+import re
 
-class EchoKernel(Kernel):
+class CCKernel(Kernel):
     implementation = 'CodeChecker'
     implementation_version = '1.0'
     language = 'no-op'
@@ -16,7 +17,13 @@ class EchoKernel(Kernel):
     def do_execute(self, code, silent, store_history=True, user_expressions=None,
                    allow_stdin=False):
         if not silent:
-            runCmd = 'echo "{code}" > tmp/file.cc && ./cc_wrapper tmp/file.cc'.format(code=code);
+            with open("/tmp/file.cc", "w") as tmpFile:
+                tmpFile.write(code)
+            runCmd = """clang --version | head -1
+                        CodeChecker check --print-steps -b "clang -c /tmp/file.cc" \
+                        | grep -v '\[INFO' \
+                        | sed -e '/----==== Summary ====----/,$ d'
+            """
             proc = Popen([runCmd], stdout=PIPE, shell=True)
             res, _ = proc.communicate()
 

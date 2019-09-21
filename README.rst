@@ -3,6 +3,7 @@ codechecker_kernel
 
 ``codechecker_kernel`` is a simple kernel to run CodeChecker inside a Jupyter notebook.
 It is base on echo_kernel provided in the documentation.
+Make sure you've installed CodeChecker first and that it's in your path when you launch Jupyter.
 
 Installation
 ------------
